@@ -21,7 +21,7 @@ else:
     print('Token file found.')
 
 intents = discord.Intents.default()
-intents.members = True  # Enable the members intent
+intents.members = True
 intents.message_content = True
 intents.typing = False
 intents.presences = False
