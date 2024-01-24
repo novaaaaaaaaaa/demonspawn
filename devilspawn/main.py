@@ -35,8 +35,10 @@ async def on_message(message):
         await message.channel.send('bang')
 
 @client.event
-async def on_member_join(member, message):
-    await message.channel.send(member.name,'has entered the 9 rings')
+async def on_member_join(member):
+    channel = member.guild.system_channel
+    if channel is not None:
+        await channel.send(f'{member.name} has entered the 9 rings')
 
 client.run(token, log_handler=logger)
 
