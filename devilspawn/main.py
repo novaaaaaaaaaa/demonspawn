@@ -3,6 +3,8 @@ import asyncio
 from discord.ext import commands
 import logging
 
+welcome_channel_id = 1199815193954373735
+
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
@@ -19,6 +21,7 @@ else:
     print('Token file found.')
 
 intents = discord.Intents.default()
+intents.members = True  # Enable the members intent
 intents.message_content = True
 intents.typing = False
 intents.presences = False
@@ -39,9 +42,8 @@ async def on_message(message):
 
 @bot.event
 async def on_member_join(member):
-    channel = member.guild.system_channel
-    if channel is not None:
-        await channel.send(f'{member.name} has entered the 9 rings')
+    channel = bot.get_channel(welcome_channel_id)
+    await channel.send(f'{member.name} has entered the 9 rings')
 
 bot.run(token)
 
