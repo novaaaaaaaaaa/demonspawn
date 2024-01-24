@@ -5,8 +5,14 @@ import logging
 
 logger = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
 
-token_file = open('token.txt', 'r')
-token = token_file.read()
+try:
+    token_file = open('token.txt', 'r')
+    token = token_file.read()
+except:
+    print('No token file found. Please create a file called token.txt and place your bot token inside it.')
+    exit()
+else:
+    print('Token file found.')
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -29,8 +35,10 @@ async def on_message(message):
         await message.channel.send('bang')
 
 @client.event
-async def on_member_join(member, message):
-    await message.channel.send(member.name,'has entered the 9 rings')
+async def on_member_join(member):
+    channel = member.guild.system_channel
+    if channel is not None:
+        await channel.send(f'{member.name} has entered the 9 rings')
 
 client.run(token, log_handler=logger)
 
