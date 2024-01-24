@@ -5,8 +5,14 @@ import logging
 
 logger = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
 
-token_file = open('token.txt', 'r')
-token = token_file.read()
+try:
+    token_file = open('token.txt', 'r')
+    token = token_file.read()
+except:
+    print('No token file found. Please create a file called token.txt and place your bot token inside it.')
+    exit()
+else:
+    print('Token file found.')
 
 intents = discord.Intents.default()
 intents.message_content = True
