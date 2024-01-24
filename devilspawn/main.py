@@ -43,7 +43,7 @@ async def on_message(message):
 @bot.event
 async def on_member_join(member):
     channel = bot.get_channel(welcome_channel_id)
-    await channel.send(f'{member.name} has entered the 9 rings')
+    await channel.send(f'{member.mention} has entered the 9 rings')
 
 bot.run(token)
 
