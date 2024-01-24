@@ -45,6 +45,16 @@ async def on_member_join(member):
     channel = bot.get_channel(welcome_channel_id)
     await channel.send(f'{member.mention} has entered the 9 rings')
 
+# Bot status
+async def change_status():
+    while True:
+        await bot.change_presence(activity=discord.Game('with fire'))
+        await asyncio.sleep(5)
+        await bot.change_presence(activity=discord.Game('with souls'))
+        await asyncio.sleep(5)
+        await bot.change_presence(activity=discord.Game('with the devil'))
+        await asyncio.sleep(5)
+
 bot.run(token)
 
 
