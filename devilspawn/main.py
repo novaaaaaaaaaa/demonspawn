@@ -19,28 +19,27 @@ intents.message_content = True
 intents.typing = False
 intents.presences = False
 
-client = discord.Client(intents=intents)
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-@client.event
+@bot.event
 async def on_ready():
-    print(f'We have logged in as {client.user}')
+    print(f'We have logged in as {bot.user}')
 
-@client.event
+@bot.event
 async def on_message(message):
-    if message.author == client.user:
+    if message.author == bot.user:
         return
 
     if message.content.startswith('$hello'):
         await message.channel.send('bang')
 
-@client.event
+@bot.event
 async def on_member_join(member):
     channel = member.guild.system_channel
     if channel is not None:
         await channel.send(f'{member.name} has entered the 9 rings')
 
-client.run(token, log_handler=logger)
+bot.run(token)
 
 
 
