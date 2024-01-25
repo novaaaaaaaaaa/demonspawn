@@ -50,10 +50,8 @@ async def on_member_join(member):
 async def change_status():
     while True:
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name='with fire'))
-        print('Status changed')
         await asyncio.sleep(5)
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name='with the damned'))
-        print('Status changed')
         await asyncio.sleep(5)
 
 bot.run(token)
