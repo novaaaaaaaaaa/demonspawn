@@ -2,8 +2,11 @@ import discord
 import asyncio
 from discord.ext import commands
 import logging
+import requests
 
 welcome_channel_id = 1199815193954373735
+
+pokeapi_base_url = 'https://pokeapi.co/api/v2/pokemon/'
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
@@ -41,6 +44,22 @@ async def on_ready():
 async def on_member_join(member):
     channel = bot.get_channel(welcome_channel_id)
     await channel.send(f'{member.mention} has entered the 9 rings')
+
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+    else:
+        if message.content.startswith('~pokemon'):
+            pokemon_id = message.content.strip('~pokemon ')
+            
+            pokeapi_response = requests.get(f'{pokeapi_base_url}{pokemon_id}')
+
+            pokeapi_data = pokeapi_response.json()
+
+            pokemon_name = pokeapi_data['name']
+
+            await message.channel.send(f'Pokemon name: {pokemon_name}')
 
 # Bot commands
 @bot.command()
