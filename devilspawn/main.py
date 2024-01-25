@@ -28,7 +28,7 @@ class MyBot(commands.Bot):
         intents.typing = False
         intents.presences = False
 
-        super().__init__(command_prefix="!", intents=intents)
+        super().__init__(command_prefix="~", intents=intents)
 
 bot = MyBot()
 
