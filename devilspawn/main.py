@@ -27,7 +27,6 @@ class Bot(commands.Bot):
         intents.message_content = True
         intents.typing = False
         intents.presences = False
-
         super().__init__(command_prefix="~", intents=intents)
 
 bot = Bot()
@@ -37,13 +36,9 @@ async def on_ready():
     print(f'We have logged in as {bot.user}')
     bot.loop.create_task(change_status())
 
-@bot.event
-async def on_message(message):
-    if message.author == bot.user:
-        return
-
-    if message.content.startswith('$hello'):
-        await message.channel.send('bang')
+@bot.command()
+async def hello(ctx):
+    await ctx.send('bang')
 
 @bot.event
 async def on_member_join(member):
