@@ -36,14 +36,14 @@ async def on_ready():
     print(f'We have logged in as {bot.user}')
     bot.loop.create_task(change_status())
 
-@bot.command()
-async def hello(ctx):
-    await ctx.send('bang')
-
 @bot.event
 async def on_member_join(member):
     channel = bot.get_channel(welcome_channel_id)
     await channel.send(f'{member.mention} has entered the 9 rings')
+
+@bot.command()
+async def hello(ctx):
+    await ctx.send('bang')
 
 @bot.command()
 async def tester(ctx):
