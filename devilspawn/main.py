@@ -31,6 +31,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 @bot.event
 async def on_ready():
     print(f'We have logged in as {bot.user}')
+    bot.loop.create_task(change_status())
 
 @bot.event
 async def on_message(message):
@@ -48,11 +49,11 @@ async def on_member_join(member):
 # Bot status
 async def change_status():
     while True:
-        await bot.change_presence(activity=discord.Game('with fire'))
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name='with fire'))
+        print('Status changed')
         await asyncio.sleep(5)
-        await bot.change_presence(activity=discord.Game('with souls'))
-        await asyncio.sleep(5)
-        await bot.change_presence(activity=discord.Game('with the devil'))
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name='with the damned'))
+        print('Status changed')
         await asyncio.sleep(5)
 
 bot.run(token)
