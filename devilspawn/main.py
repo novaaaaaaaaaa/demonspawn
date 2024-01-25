@@ -20,13 +20,17 @@ except:
 else:
     print('Token file found.')
 
-intents = discord.Intents.default()
-intents.members = True
-intents.message_content = True
-intents.typing = False
-intents.presences = False
+class MyBot(commands.Bot):
+    def __init__(self):
+        intents = discord.Intents.default()
+        intents.members = True
+        intents.message_content = True
+        intents.typing = False
+        intents.presences = False
 
-bot = commands.Bot(command_prefix="!", intents=intents)
+        super().__init__(command_prefix="!", intents=intents)
+
+bot = MyBot()
 
 @bot.event
 async def on_ready():
