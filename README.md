@@ -1,73 +1,33 @@
-# Discord Bot with Welcome Message and Status Rotation
+### Discord Bot README
 
-This is a simple Discord bot script written in Python using the [discord.py](https://discordpy.readthedocs.io/) library. The bot has functionality to welcome new members to a specific channel and rotates its status playing different games.
+This is a simple Discord bot implemented in Python using the Discord.py library. The bot performs basic functions such as responding to messages and greeting new members in a designated channel.
 
-## Prerequisites
+#### Prerequisites
+- Python 3.x installed on your system.
+- Discord.py library installed. You can install it via pip:
+  ```
+  pip install discord.py
+  ```
 
-Before running the bot, ensure you have the following installed:
+#### Setup
+1. Clone or download the repository to your local machine.
+2. Create a file named `token.txt` in the same directory as the bot script (`bot.py`) and place your Discord bot token inside it.
+3. Ensure the required permissions for your bot on your Discord server.
+4. Customize the bot's functionality according to your preferences.
 
-- Python 3.x
-- [discord.py](https://discordpy.readthedocs.io/)
+#### Usage
+1. Run the bot script `bot.py`.
+   ```
+   python bot.py
+   ```
+2. The bot should now be active on your Discord server.
 
-## Setup
+#### Bot Functionality
+- **Greetings**: When a new member joins the server, the bot sends a welcome message to a specified channel.
+- **Commands**: The bot responds to the `$hello` command by sending 'bang' to the channel where the command was issued.
+- **Status**: The bot periodically changes its status, alternating between 'playing with fire' and 'playing with the damned'.
 
-1. Clone this repository to your local machine.
+#### Important Note
+- Ensure that your `token.txt` file is kept private and never shared publicly. It contains sensitive information that grants access to your Discord bot.
 
-```bash
-git clone https://github.com/your-username/your-repository.git
-cd your-repository
-```
-
-2. Create a virtual environment (optional but recommended).
-
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-```
-
-3. Install the required dependencies.
-
-```bash
-pip install -r requirements.txt
-```
-
-4. Create a file named `token.txt` in the same directory as the script and place your bot token inside it.
-
-## Configuration
-
-- `welcome_channel_id`: Set the channel ID where the welcome messages will be sent.
-- `logger`: Configures logging to save Discord events in `discord.log`.
-- `intents`: Sets up custom intents for better member tracking.
-
-## Running the Bot
-
-Run the bot using the following command:
-
-```bash
-python your_bot_script.py
-```
-
-Make sure your bot is added to your Discord server, and the necessary permissions are granted.
-
-## Bot Features
-
-- Welcomes new members to the specified channel.
-- Responds to the command `$hello` with a message.
-- Rotates its status playing different games.
-
-## Customization
-
-Feel free to modify the script to add more features or customize the behavior of your bot.
-
-## Using a Class-based Client
-
-The script includes an alternative implementation using a class-based client. If you prefer using a class-based approach, uncomment the relevant code and comment out the original bot setup.
-
-```python
-# class my_client(discord.Client):
-#     # ... (uncomment and modify as needed)
-```
-
-## Disclaimer
-
-This script is a basic template for a Discord bot. It's recommended to enhance and modify it based on your specific requirements and needs. Ensure you comply with Discord's [Terms of Service](https://discord.com/terms) and [Developer Policy](https://discord.com/developers/docs/policy) while developing and deploying your bot.
+Feel free to modify and extend the functionality of the bot as per your requirements. Happy coding! 🤖
