@@ -20,7 +20,7 @@ except:
 else:
     print('Token file found.')
 
-class MyBot(commands.Bot):
+class Bot(commands.Bot):
     def __init__(self):
         intents = discord.Intents.default()
         intents.members = True
@@ -30,7 +30,7 @@ class MyBot(commands.Bot):
 
         super().__init__(command_prefix="~", intents=intents)
 
-bot = MyBot()
+bot = Bot()
 
 @bot.event
 async def on_ready():
@@ -50,6 +50,10 @@ async def on_member_join(member):
     channel = bot.get_channel(welcome_channel_id)
     await channel.send(f'{member.mention} has entered the 9 rings')
 
+@bot.command()
+async def tester(ctx):
+    await ctx.send("cock 'n' ball")
+
 # Bot status
 async def change_status():
     while True:
@@ -57,9 +61,5 @@ async def change_status():
         await asyncio.sleep(5)
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name='with the damned'))
         await asyncio.sleep(5)
-
-@bot.command()
-async def tester(ctx):
-    await ctx.send("cock 'n' ball")
 
 bot.run(token)
