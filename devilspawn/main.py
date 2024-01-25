@@ -58,4 +58,8 @@ async def change_status():
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name='with the damned'))
         await asyncio.sleep(5)
 
+@bot.command()
+async def tester(ctx):
+    await ctx.send("cock 'n' ball")
+
 bot.run(token)
