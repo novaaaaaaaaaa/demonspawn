@@ -5,9 +5,14 @@ This is a simple Discord bot implemented in Python using the Discord.py library.
 #### Prerequisites
 - Python 3.x installed on your system.
 - Discord.py library installed. You can install it via pip:
+- Requests library installed. You can install it via pip:
   ```
   pip install discord.py
+
+  pip install requests
   ```
+
+
 
 #### Setup
 1. Clone or download the repository to your local machine.
