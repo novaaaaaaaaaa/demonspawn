@@ -12,8 +12,6 @@ This is a simple Discord bot implemented in Python using the Discord.py library.
   pip install requests
   ```
 
-
-
 #### Setup
 1. Clone or download the repository to your local machine.
 2. Create a file named `token.txt` in the same directory as the bot script (`bot.py`) and place your Discord bot token inside it.
