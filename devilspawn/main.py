@@ -45,22 +45,6 @@ async def on_member_join(member):
     channel = bot.get_channel(welcome_channel_id)
     await channel.send(f'{member.mention} has entered the 9 rings')
 
-@bot.event
-async def on_message(message):
-    if message.author == bot.user:
-        return
-    else:
-        if message.content.startswith('~pokemon'):
-            pokemon_id = message.content.strip('~pokemon ')
-            
-            pokeapi_response = requests.get(f'{pokeapi_base_url}{pokemon_id}')
-
-            pokeapi_data = pokeapi_response.json()
-
-            pokemon_name = pokeapi_data['name']
-
-            await message.channel.send(f'Pokemon name: {pokemon_name}')
-
 # Bot commands
 @bot.command()
 async def hello(ctx):
@@ -69,6 +53,19 @@ async def hello(ctx):
 @bot.command()
 async def tester(ctx):
     await ctx.send("cock 'n' ball")
+
+@bot.command()
+async def pokemon(ctx, *, arg):
+    pokemon_id = arg
+
+    pokeapi_response = requests.get(f'{pokeapi_base_url}{pokemon_id}')
+
+    pokeapi_data = pokeapi_response.json()
+
+    pokemon_name = pokeapi_data['name']
+
+    await ctx.send(f'Pokemon name: {pokemon_name}')
+
 
 # Bot status
 async def change_status():
