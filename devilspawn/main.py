@@ -1,6 +1,7 @@
 import discord
 import asyncio
 from discord.ext import commands
+from discord import app_commands
 import logging
 import requests
 
@@ -14,6 +15,7 @@ handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w'
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
 
+
 try:
     token_file = open('token.txt', 'r')
     token = token_file.read()
@@ -23,6 +25,16 @@ except:
 else:
     print('Token file found.')
 
+
+try:
+    with open('guild.txt', 'r') as file:
+        guildID = file.read().replace('\n', '')
+except OSError:
+    print("Could not find guild.txt, please create it in the security folder and place your guild ID inside.")
+    exit()
+else:
+    print("Guild ID loaded successfully.")
+
 class Bot(commands.Bot):
     def __init__(self):
         intents = discord.Intents.default()
@@ -31,8 +43,16 @@ class Bot(commands.Bot):
         intents.typing = False
         intents.presences = False
         super().__init__(command_prefix="~", intents=intents)
+        
+    async def setup_hook(self):
+        await self.tree.sync(guild = discord.Object(id = guildID))
+        print(f"Synced slash commands for {self.user}.")
+    
+    async def on_command_error(self, ctx, error):
+        await ctx.reply(error, ephemeral = True)
 
 bot = Bot()
+
 
 # Bot events
 @bot.event
@@ -44,6 +64,16 @@ async def on_ready():
 async def on_member_join(member):
     channel = bot.get_channel(welcome_channel_id)
     await channel.send(f'{member.mention} has entered the 9 rings')
+
+
+# Bot slash commands
+@bot.hybrid_command(name = "test", with_app_command = True, description = "Testing")
+@app_commands.guilds(discord.Object(id = guildID))
+@commands.has_permissions(administrator = True)
+async def test(ctx: commands.Context):
+    await ctx.defer(ephemeral = True)
+    await ctx.reply("hi!")
+
 
 # Bot commands
 @bot.command()
