@@ -71,8 +71,30 @@ async def on_member_join(member):
 @app_commands.guilds(discord.Object(id = guildID))
 @commands.has_permissions(administrator = True)
 async def test(ctx: commands.Context):
-    await ctx.defer(ephemeral = True)
-    await ctx.reply("hi!")
+    # await ctx.defer(ephemeral = True)
+    await ctx.reply("Test working")
+
+@bot.hybrid_command(name='pokemonstats', with_app_command=True, description='Get stats for a Pokemon')
+@app_commands.guilds(discord.Object(id=guildID))
+async def pokemonstats(ctx: commands.Context, *, arg):
+    pokemon_name = arg
+
+    pokeapi_response = requests.get(f'{pokeapi_base_url}{pokemon_name}')
+
+    print(type(pokemon_name))
+    pokemon_name = pokemon_name.capitalize()
+    pokeapi_data = pokeapi_response.json()
+
+    pokemon_hp = pokeapi_data['stats'][0]['base_stat']
+    pokemon_attack = pokeapi_data['stats'][1]['base_stat']
+    pokemon_defence = pokeapi_data['stats'][2]['base_stat']
+    pokemon_sp_attack = pokeapi_data['stats'][3]['base_stat']
+    pokemon_sp_defence = pokeapi_data['stats'][4]['base_stat']
+    pokemon_speed = pokeapi_data['stats'][5]['base_stat']
+
+    pokemon_bst = pokemon_hp + pokemon_attack + pokemon_defence + pokemon_sp_attack + pokemon_sp_defence + pokemon_speed
+
+    await ctx.reply(f'Pokemon stats - {pokemon_name}\n\t--Base Stat Total: {pokemon_bst}\n\t--HP: {pokemon_hp}\n\t--Attack: {pokemon_attack}\n\t--Defence: {pokemon_defence}\n\t--Special Attack: {pokemon_sp_attack}\n\t--Special Defence: {pokemon_sp_defence}\n\t--Speed: {pokemon_speed}')
 
 
 # Bot commands
