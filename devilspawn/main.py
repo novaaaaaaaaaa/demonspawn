@@ -9,6 +9,8 @@ welcome_channel_id = 1199815193954373735
 
 pokeapi_base_url = 'https://pokeapi.co/api/v2/pokemon/'
 
+marvel_api_base_url = 'http://gateway.marvel.com/v1/public/'
+
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
@@ -30,10 +32,28 @@ try:
     with open('guild.txt', 'r') as file:
         guildID = file.read().replace('\n', '')
 except OSError:
-    print("Could not find guild.txt, please create it in the security folder and place your guild ID inside.")
+    print("Could not find guild.txt, please create it and place your guild ID inside.")
     exit()
 else:
     print("Guild ID loaded successfully.")
+
+try:
+    with open('marvel_api_hash.txt', 'r') as file:
+        marvelapihash = file.read().replace('\n', '')
+except OSError:
+    print("Could not find marvel_api_hash.txt, please create and place your marvel API hash inside.")
+    exit()
+else:
+    print("marvel API hash loaded successfully.")
+
+try:
+    with open('marvel_api_key.txt', 'r') as file:
+        marvelapikey = file.read().replace('\n', '')
+except OSError:
+    print("Could not find marvel_api_key.txt, please create it and place your marvel API key inside.")
+    exit()
+else:
+    print("marvel API key loaded successfully.")
 
 class Bot(commands.Bot):
     def __init__(self):
@@ -96,6 +116,24 @@ async def pokemonstats(ctx: commands.Context, *, arg):
 
     await ctx.reply(f'Pokemon stats - {pokemon_name}\n\t--Base Stat Total: {pokemon_bst}\n\t--HP: {pokemon_hp}\n\t--Attack: {pokemon_attack}\n\t--Defence: {pokemon_defence}\n\t--Special Attack: {pokemon_sp_attack}\n\t--Special Defence: {pokemon_sp_defence}\n\t--Speed: {pokemon_speed}')
 
+@bot.hybrid_command(name='marvelcharname', with_app_command=True, description='Just gets all times characters appear')
+@app_commands.guilds(discord.Object(id=guildID))
+async def marvelcharname(ctx: commands.Context, *, arg):
+    char_name = arg
+
+    marvel_api_response = requests.get(f'{marvel_api_base_url}/characters?ts=1&apikey={marvelapikey}&hash={marvelapihash}&name={char_name}')
+
+    print(marvel_api_response)
+
+    char_name = char_name.capitalize()
+    marvel_api_data = marvel_api_response.json()
+
+    comics_num = marvel_api_data['data']['results'][0]['comics']['available']
+    series_num = marvel_api_data['data']['results'][0]['series']['available']
+    stories_num = marvel_api_data['data']['results'][0]['stories']['available']
+    events_num = marvel_api_data['data']['results'][0]['events']['available']
+
+    await ctx.reply(f'Character appearances - {char_name}:\n\t--Comic appearances: {comics_num}\n\t--Series appearances: {series_num}\n\t--Story appearances: {stories_num}\n\t--Event appearances: {events_num}')
 
 # Bot commands
 @bot.command()
